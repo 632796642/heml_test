@@ -1,0 +1,201 @@
+<!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="bookmark" href="favicon.ico" />
+		<!-- 引入CSS -->
+		<link href="../h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+		<link href="../h-ui/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+		<link href="../h-ui/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+		<link href="../h-ui/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+		<!-- 引入JS -->
+		<script type="text/javascript" src="../h-ui/js/H-ui.js"></script>
+		<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../h-ui/lib/icheck/jquery.icheck.min.js"></script>
+
+		<script type="text/javascript">
+			$(function() {
+				//登录操作
+				$("#submitBtn").click(function() {
+					var data = $("#form").serialize();
+					$.ajax({
+						type: "post",
+						//验证登录
+						url: "login",
+						data: data,
+						dataType: "json", //设置返回的数据类型
+						success: function(data) {
+							if("success" == data.type) {
+								//进入系统主页面
+								window.location.href = "main";
+							} else {
+								alert("消息提醒：账号或密码错误");
+								$("input[name='userPassword']").val("");//清空密码输入框
+							}
+						}
+
+					});
+				});
+
+			})
+		</script>
+		<script type="application/x-javascript">
+			addEventListener("load", function() {
+				setTimeout(hideURLbar, 0);
+			}, false);
+
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+		</script>
+		<title>登录页面 | 仓库信息管理系统</title>
+		<meta name="keywords" content="仓库信息管理系统">
+		<style>
+			.box {
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				background: rgba(0, 0, 0, 0.3);
+				position: absolute;
+				/*z-index: 0;*/
+			}
+			
+			.loginBox {
+				/*width:500px;*/
+				height: 300px;
+				background: rgba(255, 255, 255, 0);
+				left: 50%;
+				border-radius: 10px;
+				position: absolute;
+				z-index: 10;
+				/*box-shadow: 0px 0px 25px 5px #000000dc;*/
+				-moz-transition: all 0.5s;
+				-webkit-transition: all 0.5s;
+			}
+			
+			.loginBox:hover {
+				transform: scale(1.01);
+				-moz-transform: scale(1.01);
+				-webkit-transform: scale(1.01);
+				box-shadow: 0px 0px 25px 5px #000000dc;
+				-moz-box-shadow: 0px 0px 25px 5px #000000dc;
+				-webkit-box-shadow: 0px 0px 25px 5px #000000dc;
+			}
+			
+			.loginBox img {
+				/*position: absolute;*/
+				margin-left: 25%;
+			}
+			/*.loginWraper{
+				padding: 0;
+				background: rgba(0, 0, 0, 0.3);
+				position: absolute;
+				z-index: -10;
+			}*/
+			
+			#div_first {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				z-index: -999;
+				transition:all 2s;
+			}
+			
+			canvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				/*z-index: -1;*/
+			}
+		</style>
+	</head>
+
+	<body style="font-weight: lighter; ">
+		<!--<div class="header" style="padding: 0;">
+			<h3 style="font-weight: lighter; color: white; width: 500px; height: 60px; line-height: 60px; margin: 0 0 0 30px; padding: 0;">
+		仓库信息管理系统
+	</h3>
+		</div>-->
+		<!--<div data-vide-bg="video/video2">-->
+		<canvas></canvas>
+		<div class="box">
+			<div class="loginWraper">
+				<div id="loginform" class="loginBox">
+					<img src="../h-ui/images/R.png">
+					<form id="form" class="form form-horizontal" method="post">
+						<!-- 输入框 -->
+						<div class="row cl">
+							<label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+							<div class="formControls col-8">
+								<input id="userName" name="userName" type="text" placeholder="账户" class="input-text size-L">
+							</div>
+						</div>
+						<div class="row cl">
+							<label class="form-label col-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+							<div class="formControls col-8">
+								<input id="userPassword" name="userPassword" type="password" placeholder="密码" class="input-text size-L">
+							</div>
+						</div>
+
+						<!-- 登录按钮 -->
+						<div class="row">
+							<div class="formControls col-8 col-offset-3">
+								<input id="submitBtn" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!--</div>-->
+			<!--</div>-->
+			<!--<div class="footer">Copyright @ 2019 易童智健. All rights reserved</div>-->
+			<img id="div_first" src='../h-ui/images/head6.png' style="width:100%;height:100%;" />
+			<canvas></canvas>
+			<script type="text/javascript" src="../h-ui/js/ban.js"></script>
+			<script type="text/javascript" src="../h-ui/js/jquery.lizi.min.js"></script>
+			<script type="text/javascript" src="../h-ui/js/jquery.vide.min.js"></script>
+			<script type="text/javascript" src="../h-ui/js/jquery-2.1.4.min.js"></script>
+			<script>
+				var imgs = ["head6.png", "head8.png", "head5.png", "head9.png"];       //（设定想要显示的图片）
+				var x = 0;       
+				function time() {              
+					x++;                 
+					if(x == 4) {
+						x = 0;
+					}         //         超过2则取余数，保证循环在0、1、2之间
+//					document.getElementById("div_first").style.opacity=0;              
+					document.getElementById("div_first").src = "../h-ui/images/" + imgs[x];
+//					document.getElementById("div_first").style.opacity=1;       
+				}
+				setInterval("time()", 3000);
+				window.onresize = window.onload = function()  {   
+					var w, h   
+					if(!!(window.attachEvent && !window.opera))    {   
+						h = document.documentElement.clientHeight;   
+						w = document.documentElement.clientWidth;   
+					} else {   
+						h = window.innerHeight;   
+						w = window.innerWidth;   
+					}    
+					//				document.getElementById('msg').value  = '窗口大小：' + 'width:' + w + '; height:' + h;    	
+					var bgImg = document.getElementById('div_first').getElementsByTagName('img');    
+					bgImg.width = (w - 5);    
+					bgImg.height = (h - 5);        
+				}
+			</script>
+	</body>
+
+</html>
